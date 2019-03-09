@@ -1,0 +1,36 @@
+version: '3'
+services:
+  web:
+    build: .
+    command: 'bin/rails s -b 0.0.0.0'
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - hub
+      - chrome
+    environment:
+      - "SELENIUM_HUB_URL=http://hub:4444/wd/hub"
+      - "TEST_APP_HOST=web"
+      - "TEST_APP_PORT=3001"
+    networks:
+      main:
+        aliases:
+          - web
+  hub:
+    image: selenium/hub:3.141.59-iron
+    ports:
+      - "4444:4444"
+    networks:
+      main:
+  chrome:
+    image: selenium/node-chrome:3.141.59-iron
+    depends_on:
+      - hub
+    environment:
+      HUB_HOST: hub
+    networks:
+      main:
+networks:
+  main:
