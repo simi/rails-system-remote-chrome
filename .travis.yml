@@ -9,6 +9,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 install:
+  - docker pull elgalu/selenium
 
 script:
   - docker-compose run --rm --use-aliases web bin/rails test:system

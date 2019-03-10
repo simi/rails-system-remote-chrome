@@ -8,19 +8,32 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - chrome
+      - zalenium
     environment:
-      - "SELENIUM_HUB_URL=http://chrome:4444/wd/hub"
+      - "SELENIUM_HUB_URL=http://zalenium:4444/wd/hub"
       - "TEST_APP_HOST=web"
       - "TEST_APP_PORT=3001"
     networks:
       main:
         aliases:
           - web
-  chrome:
-    image: selenium/standalone-chrome:3.141.59-iron
+  zalenium:
+    image: "dosel/zalenium"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
     ports:
-      - "4444:4444"
+      - 4444:4444
+    command: >
+      start --desiredContainers 1
+            --maxDockerSeleniumContainers 8
+            --screenWidth 800 --screenHeight 600
+            --timeZone "Europe/Prague"
+            --videoRecordingEnabled true
+            --sauceLabsEnabled false
+            --browserStackEnabled false
+            --testingBotEnabled false
+            --startTunnel false
     networks:
       main:
 networks:
