@@ -1,24 +1,16 @@
-# README
+# Chrome as a service for Rails testing example app
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+example app for https://medium.com/@retrorubies/chrome-as-a-service-for-rails-testing-b1a45e70fec1
 
-Things you may want to cover:
+## install
 
-* Ruby version
+```bash
+bundle install
 
-* System dependencies
+```
 
-* Configuration
+## run system tests
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+docker-compose run --rm --use-aliases web bin/rails test:system
+```
